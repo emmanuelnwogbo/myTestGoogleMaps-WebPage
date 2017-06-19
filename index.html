@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>My Google Map</title>
+  <style>
+    #map{
+      height:400px;
+      width: 100%;
+    }
+  </style>
+</head>
+<body>
+  <h1>Testing Googlemaps</h1>
+  <div id="map"></div>
+  <script>
+    function initMap() {
+      //Map options when adding maps
+      var options = {
+        zoom: 12,
+        center: {lat:5.765128799999999, lng:-0.06970409999999999}
+      }
+
+      var map = new google.maps.Map(document.getElementById('map'), options);
+
+      //listen for click on map
+      google.maps.event.addListener(map, 'click', function(event) {
+        //Add marker
+        addMarker({coords:event.latLng});
+      })
+
+/*      var marker = new google.maps.Marker({
+        position:{lat:5.765128799999999, lng:-0.06970409999999999},
+        map:map,
+        icon: 'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png'
+      });
+
+      var infoWindow = new google.maps.InfoWindow({
+        content: '<h1>Dawhenya Police Station</h1>'
+      });
+
+      marker.addListener('click', function() {
+        infoWindow.open(map, marker);
+      });
+      */
+
+      var markers = [
+        {
+          coords: {lat:5.7958, lng:-0.0023},
+          iconImage:'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png',
+          content: '<h1>Afienya</h1>'
+        },
+        {
+          coords: {lat:5.756115, lng:-0.047354},
+        }
+      ];
+
+      for(var i = 0; i< markers.length; i++) {
+        //loop through the markers array for each marker
+        addMarker(markers[i]);
+      }
+
+      addMarker({
+        coords: {lat:5.765128799999999, lng:-0.06970409999999999},
+        iconImage:'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png',
+        content: '<h1>Dawhenya Police Station</h1>'
+      });
+      //addMarker({coords: {lat:5.7958, lng:-0.0023}});
+      //addMarker({coords: {lat:5.756115, lng:-0.047354}});
+
+      //Add Marker function
+      function addMarker(props) {
+        var marker = new google.maps.Marker({
+          position: props.coords,
+          map: map,
+          //icon: props.iconImage
+        });
+
+        //Check for custom icon
+        if(props.iconImage) {
+          //set icon image if available
+          marker.setIcon(props.iconImage);
+        }
+
+        //Check content
+      if(props.content) {
+        var infoWindow = new google.maps.InfoWindow({
+          content: props.content
+        });
+
+        marker.addListener('click', function() {
+          infoWindow.open(map, marker);
+        });
+      }
+    }
+  }
+  </script>
+  <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAj0BjhVkthdOUOFZ4PEV-Xg3sjYVSHyqg&callback=initMap"></script>
+</body>
+</html>
